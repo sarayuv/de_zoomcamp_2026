@@ -49,13 +49,13 @@ def main(params):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Ingest CSV data into PostgreSQL')
-    parser.add_argument('--user', required=True, help='PostgreSQL username')
-    parser.add_argument('--password', required=True, help='PostgreSQL password')
-    parser.add_argument('--host', required=True, help='PostgreSQL host')
-    parser.add_argument('--port', required=True, help='PostgreSQL port')
-    parser.add_argument('--db', required=True, help='PostgreSQL database name')
-    parser.add_argument('--table_name', required=True, help='Name of the table to insert data into')
-    parser.add_argument('--url', required=True, help='URL of the CSV file to download')
+    parser.add_argument('--user', default='postgres', help='PostgreSQL username')
+    parser.add_argument('--password', default='postgres', help='PostgreSQL password')
+    parser.add_argument('--host', default='localhost', help='PostgreSQL host')
+    parser.add_argument('--port', default='5433', help='PostgreSQL port')
+    parser.add_argument('--db', default='ny_taxi', help='PostgreSQL database name')
+    parser.add_argument('--table_name', default='green_trips', help='Name of the table to insert data into')
+    parser.add_argument('--url', default='https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz', help='URL of the CSV file to download')
 
     args = parser.parse_args()
     main(args)
