@@ -1,61 +1,83 @@
 import pandas as pd
 from sqlalchemy import create_engine
-import argparse
 from time import time
+import os
 
-def main(params):
-    user = params.user
-    password = params.password
-    host = params.host
-    port = params.port
-    db = params.db
-    table_name = params.table_name
-    url = params.url
-    csv_name = 'green_tripdata_2025-11.csv.gz'
-
-    # download the file
-    import os
-    os.system(f"wget {url} -O {csv_name}")
-
-    # create database engine
+def ingest_green_taxi_data():
+    """Ingest green taxi trip data into PostgreSQL"""
+    
+    # Configuration
+    user = 'postgres'
+    password = 'postgres'
+    host = 'localhost'
+    port = '5433'
+    db = 'ny_taxi'
+    table_name = 'green_taxi_trips'
+    
+    parquet_name = 'green_tripdata_2025-11.parquet'
+    
+    print("Connecting to database...")
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
-
-    # read and insert data in chunks
-    df_iter = pd.read_csv(csv_name, iterator=True, chunksize=100000, compression='gzip')
-
-    df = next(df_iter)
-    df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
-    df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
-
-    # create table with headers
-    df.head(0).to_sql(name=table_name, con=engine, if_exists='replace')
-
-    # insert first chunk
-    df.to_sql(name=table_name, con=engine, if_exists='append')
-
-    # insert remaining chunks
-    while True:
-        try:
+    
+    print("Reading parquet file and inserting data in chunks...")
+    df_iter = pd.read_parquet(parquet_name, engine='pyarrow')
+    
+    # Split into chunks and insert
+    chunksize = 100000
+    total_rows = len(df_iter)
+    chunk_count = 0
+    
+    for i in range(0, total_rows, chunksize):
+        df_chunk = df_iter.iloc[i:i+chunksize]
+        
+        if chunk_count == 0:
+            # Create table with first chunk
+            df_chunk.head(n=0).to_sql(name=table_name, con=engine, if_exists='replace')
+            df_chunk.to_sql(name=table_name, con=engine, if_exists='append', index=False)
+            print(f'Inserted first chunk')
+        else:
             t_start = time()
-            df = next(df_iter)
-            df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
-            df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
-            df.to_sql(name=table_name, con=engine, if_exists='append')
+            df_chunk.to_sql(name=table_name, con=engine, if_exists='append', index=False)
             t_end = time()
-            print(f'Inserted chunk... took {t_end - t_start:.3f} seconds')
-        except StopIteration:
-            print("All chunks inserted.")
-            break
+            print(f'Inserted chunk {chunk_count + 1}, took {t_end - t_start:.3f} seconds')
+        
+        chunk_count += 1
+    
+    print(f"Completed! Inserted {chunk_count} chunks total ({total_rows:,} rows)")
+
+def ingest_zones_data():
+    """Ingest taxi zones lookup data into PostgreSQL"""
+    
+    # Configuration
+    user = 'postgres'
+    password = 'postgres'
+    host = 'localhost'
+    port = '5433'
+    db = 'ny_taxi'
+    table_name = 'zones'
+    
+    csv_name = 'taxi_zone_lookup.csv'
+    
+    print("Connecting to database...")
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
+    
+    print("Reading and inserting zones data...")
+    df_zones = pd.read_csv(csv_name)
+    df_zones.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
+    
+    print(f"Inserted {len(df_zones)} zones")
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Ingest CSV data into PostgreSQL')
-    parser.add_argument('--user', default='postgres', help='PostgreSQL username')
-    parser.add_argument('--password', default='postgres', help='PostgreSQL password')
-    parser.add_argument('--host', default='localhost', help='PostgreSQL host')
-    parser.add_argument('--port', default='5433', help='PostgreSQL port')
-    parser.add_argument('--db', default='ny_taxi', help='PostgreSQL database name')
-    parser.add_argument('--table_name', default='green_trips', help='Name of the table to insert data into')
-    parser.add_argument('--url', default='https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz', help='URL of the CSV file to download')
-
-    args = parser.parse_args()
-    main(args)
+    print("=" * 60)
+    print("Starting data ingestion process")
+    print("=" * 60)
+    
+    print("\n[1/2] Ingesting green taxi trip data...")
+    ingest_green_taxi_data()
+    
+    print("\n[2/2] Ingesting taxi zones data...")
+    ingest_zones_data()
+    
+    print("\n" + "=" * 60)
+    print("Data ingestion completed successfully!")
+    print("=" * 60)
