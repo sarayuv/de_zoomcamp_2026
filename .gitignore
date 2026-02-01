@@ -1,3 +1,6 @@
 
 # GCP service account keys and secrets
 Workshops/workflow-orchestration/dtc-de-course-*.json
+
+Homeworks/homework2/flows/06_gcp_kv.yaml
+Workshops/workflow-orchestration/flows/06_gcp_kv.yaml
