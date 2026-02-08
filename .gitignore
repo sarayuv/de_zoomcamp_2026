@@ -1,6 +1,17 @@
 
 # GCP service account keys and secrets
-Workshops/workflow-orchestration/dtc-de-course-*.json
+dtc-de-course-484819-5ca4cbde2c4d.json
 
 Homeworks/homework2/flows/06_gcp_kv.yaml
 Workshops/workflow-orchestration/flows/06_gcp_kv.yaml
+
+Homeworks/homework3/google-cloud-sdk
+Homeworks/homework3/google-cloud-sdk.staging
+Homeworks/homework3/google-cloud-sdk-456.0.0-linux-x86_64.tar.gz
+Homeworks/homework3/yellow_tripdata_2024-01.parquet
+Homeworks/homework3/yellow_tripdata_2024-03.parquet
+Homeworks/homework3/yellow_tripdata_2024-05.parquet
+Homeworks/homework3/yellow_tripdata_2024-04.parquet
+Homeworks/homework3/yellow_tripdata_2024-02.parquet
+Homeworks/homework3/yellow_tripdata_2024-06.parquet
+gcs.json
