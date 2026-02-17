@@ -123,18 +123,35 @@ if __name__ == "__main__":
                       for year in YEARS 
                       for month in MONTHS]
 
-    # Download files
-    print(f"\nStarting download of {len(download_tasks)} files...")
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        results = list(executor.map(lambda x: download_file(*x), download_tasks))
-    
-    # Filter out None values (failed downloads)
-    successful_downloads = [r for r in results if r is not None]
-    print(f"\nSuccessfully downloaded {len(successful_downloads)} files.")
+    print(f"\nStarting download and upload of {len(download_tasks)} files one by one...")
+    print("This will save disk space by uploading and deleting each file after processing.\n")
 
-    # Upload to GCS
-    print("\nUploading files to GCS...")
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        executor.map(lambda x: upload_to_gcs(x[3]), successful_downloads)
+    success_count = 0
+    fail_count = 0
 
-    print("\nAll files processed and uploaded to GCS.")
+    for i, task in enumerate(download_tasks, 1):
+        filename = f"{task[0]}_tripdata_{task[1]}-{task[2]}.csv"
+        if verify_gcs_upload(filename):
+            print(f"\n[{i}/{len(download_tasks)}] {filename} already exists in GCS. Skipping.")
+            success_count += 1
+            continue
+
+        print(f"\n[{i}/{len(download_tasks)}] Processing {task[0]} taxi data for {task[1]}-{task[2]}...")
+        result = download_file(*task)
+        if result is not None:
+            _, _, _, csv_file_path = result
+            upload_to_gcs(csv_file_path)
+            try:
+                os.remove(csv_file_path)
+                print(f"Removed local file: {csv_file_path}")
+                success_count += 1
+            except Exception as e:
+                print(f"Could not remove {csv_file_path}: {e}")
+        else:
+            fail_count += 1
+
+    print(f"\n{'='*60}")
+    print(f"Processing complete!")
+    print(f"Successfully uploaded: {success_count} files")
+    print(f"Failed: {fail_count} files")
+    print(f"{'='*60}")
