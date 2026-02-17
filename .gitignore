@@ -11,3 +11,11 @@ Homeworks/homework3/yellow_tripdata_2024-04.parquet
 Homeworks/homework3/yellow_tripdata_2024-02.parquet
 Homeworks/homework3/yellow_tripdata_2024-06.parquet
 gcs.json
+
+# Default .gitignore content added by dbt Cloud# you shouldn't commit these into source control
+# these are the default directory names, adjust/add to fit your needs
+target/
+dbt_packages/
+logs/
+# end dbt Cloud content
+dbt_internal_packages/
