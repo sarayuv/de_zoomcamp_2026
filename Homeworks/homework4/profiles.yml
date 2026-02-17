@@ -1,0 +1,85 @@
+user:
+  outputs:
+    default:
+      job_execution_timeout_seconds: 297
+      keyfile_json:
+        auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+        auth_uri: https://accounts.google.com/o/oauth2/auth
+        client_email: de-zoomcamp@dtc-de-course-484819.iam.gserviceaccount.com
+        client_id: '111831740002317987433'
+        client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/de-zoomcamp%40dtc-de-course-484819.iam.gserviceaccount.com
+        private_key: '-----BEGIN PRIVATE KEY-----
+
+          MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCnyxqvRx0YslzA
+
+          Gh4r85Ap20Gv4tXeSDbsrfPrb8JNEANZcRbpoNknN/QJzopjwPj584+fxUSTMtdc
+
+          KOo8pa1RsFCOUV73ccyrNI0MVeMqTvIoQE38YMVUL8nKsm2vkLdOutWKcHZtfujX
+
+          cZusYe2ZemZhsU+/93C0W3+1SOLL1iOkwGPWudxR5/pefa6KuXI8LWuB6OoLidAt
+
+          5h4DRLkNQB3B/G05c4PhZkpolojchpocOiJzPQUo2Wc/nEZmw2fFPuFtDJ5DqdLi
+
+          9nq+2m0d4smcdunm82R+nw0gnHLPvdtPQPU12WZ/I7wagX4vm7nX30hm7P4CXtz2
+
+          P/icxx5bAgMBAAECggEABH+YdoyEhi35+Jh6qJj+C3E6YJnHPA9ZkZzURkKXxfMg
+
+          89vpTlgmmjuQylaENUpuIl1aQ2FJhly9k1XxebDDZcZBUp9x2VZus0RUZ7lBvteg
+
+          /F1E+fgqMiiZ01pXQHazw2OU6AI92o+ldGkyUDvL3+p9Ji9XwQDEP8GYOeb7VZWb
+
+          /zFdoKs7w166M8KdvOp3PCuo+Cr06hceT2CT5FDtJyta4VlJ+2cH541iwN9eszOZ
+
+          pUPI/LqAXqEpxVehaZFyhXSpcGwr92PhmzGdTv5D7oVnUJYUZrkTv/kQZecWv4Cs
+
+          Vx5Mm9sQ4SJvpHL5nZTTrn3PXhUkSLZgP4YEBQ2SqQKBgQDUlKoZQQfprTaLlegn
+
+          EwV5HVO8klxxA+zZS4naNaR9ZeCxBDi4YhDOt5VZQc8uRzMF3BAINtcreNyX8y7z
+
+          iq9sSA6olEYSlPTro9i71/Qz7zPfVxrVqs508JfbBGaOTB79/hWSX/JRv17PZxWO
+
+          qLrQ32i8KRM76cfuNzr8bR2PTQKBgQDKEJ33h2+8WprD8t1JwftYdpQppIXCKm5t
+
+          RLnpoOvuIDttzemvyWVuaZd9kkock4jIbpS4ZPpOqvS83cex+YfNm1J6QU0eUspS
+
+          eRLj97ecAAJtQmNdsq0+qge5eRkYJwmwCKl1doPAEQaF/z4s7rNER6dg+8XjoQRc
+
+          eaBe9nXgRwKBgA+H3PWDXsSftwBzr0ZLiXbTwa5hMwe+tasabbPXf3D55HSKTmqK
+
+          H5g6qVqgCDblVMD01ucCuq2eYt9nEOMSGsbabNe8HXJ2F36vtcHjgR/aNfv3LSq3
+
+          E+ZPPYjuxV9YCFueGI1dHSMDzDVy3oxRn3RrHgfBKHqUFds9hb2zaxlxAoGARWv4
+
+          GbbaWKf4TCIAjPqsU/RJaxUvL0pMrhXSmcXDyQgh4tO/2bkjtA9rEKVV+QNnFxWG
+
+          2uM2bBioBMtddHP6iFU4vO/6gtSG1lbqeo/88Qe/zbHlWaethb388Wf9iyK+XVBc
+
+          iBKzqSUwTJEo118bD/ZeNx/JGS+UxAC1bGrYjLkCgYABHTBi8CjzpFsEf5uWutmS
+
+          8utVUMutM7UstdyK44x+x2FNIh84P3/f52ZK1ZV85sKTgpYA8FvUOsqMd8xlPyR3
+
+          iumNTlLsFesQJBzAI+oNVoeMqJt0j0++KJ5p6ssHHSXJrdI0PpQU5xjF4RfFtHLV
+
+          rhx6wH6der5+OazooW23AA==
+
+          -----END PRIVATE KEY-----
+
+          '
+        private_key_id: 5ca4cbde2c4d7c6062acb4a70a78ef45fa0d3b61
+        project_id: dtc-de-course-484819
+        token_uri: https://oauth2.googleapis.com/token
+        type: service_account
+      location: US
+      maximum_bytes_billed: 1000000000
+      method: service-account-json
+      project: dtc-de-course-484819
+      schema: dbt_prod
+      scopes:
+      - https://www.googleapis.com/auth/bigquery
+      - https://www.googleapis.com/auth/cloud-platform
+      - https://www.googleapis.com/auth/drive
+      - https://www.googleapis.com/auth/userinfo.email
+      target_name: default
+      threads: 6
+      type: bigquery
+  target: default
