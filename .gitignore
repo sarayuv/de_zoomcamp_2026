@@ -19,3 +19,5 @@ dbt_packages/
 logs/
 # end dbt Cloud content
 dbt_internal_packages/
+
+Homeworks/homework4/.venv

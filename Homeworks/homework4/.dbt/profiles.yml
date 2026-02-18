@@ -5,7 +5,7 @@ user:
       method: service-account
       keyfile: /workspaces/de_zoomcamp_2026/gcs.json
       project: dtc-de-course-484819
-      dataset: dbt_prod
+      dataset: dezoomcamp_hw4
       location: US
       threads: 6
       maximum_bytes_billed: 1000000000
