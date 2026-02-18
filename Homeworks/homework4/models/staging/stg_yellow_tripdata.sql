@@ -13,6 +13,7 @@ select
     store_and_fwd_flag,
     cast(passenger_count as integer) as passenger_count,
     cast(trip_distance as numeric) as trip_distance,
+    1 as trip_type, -- yellow trip data only has one type of trip, so we can hardcode this value to 1
 
     -- payment info
     cast(fare_amount as numeric) as fare_amount,
@@ -21,7 +22,9 @@ select
     cast(tip_amount as numeric) as tip_amount,
     cast(tolls_amount as numeric) as tolls_amount,
     cast(improvement_surcharge as numeric) as improvement_surcharge,
+    0 as ehail_fee, -- yellow trip data does not have an ehail fee column, so we can hardcode this value to 0
     cast(total_amount as numeric) as total_amount,
     cast(payment_type as integer) as payment_type
+    
 from {{ source('raw_data', 'yellow_tripdata') }}
 where vendorid is not null
