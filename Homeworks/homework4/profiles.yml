@@ -1,0 +1,18 @@
+user:
+  outputs:
+    default:
+      type: bigquery
+      method: service-account
+      keyfile: /workspaces/de_zoomcamp_2026/gcs.json
+      project: dtc-de-course-484819
+      dataset: dezoomcamp_hw4
+      location: US
+      threads: 6
+      maximum_bytes_billed: 1000000000
+      job_execution_timeout_seconds: 297
+      scopes:
+        - https://www.googleapis.com/auth/bigquery
+        - https://www.googleapis.com/auth/cloud-platform
+        - https://www.googleapis.com/auth/drive
+        - https://www.googleapis.com/auth/userinfo.email
+  target: default
