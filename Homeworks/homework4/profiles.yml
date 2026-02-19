@@ -8,7 +8,6 @@ user:
       dataset: dezoomcamp_hw4
       location: US
       threads: 6
-      maximum_bytes_billed: 1000000000
       job_execution_timeout_seconds: 297
       scopes:
         - https://www.googleapis.com/auth/bigquery
