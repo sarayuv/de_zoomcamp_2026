@@ -1,4 +1,7 @@
 """@bruin
+name: ingestion.trips
+type: python
+image: python:3.11
 
 # TODO: Set the asset name (recommended pattern: schema.asset_name).
 # - Convention in this module: use an `ingestion.` schema for raw ingestion tables.
@@ -28,21 +31,27 @@ materialization:
   type: table
   # TODO: pick a strategy.
   # suggested strategy: append
-  strategy: TODO
+  strategy: append
 
 # TODO: Define output columns (names + types) for metadata, lineage, and quality checks.
 # Tip: mark stable identifiers as `primary_key: true` if you plan to use `merge` later.
 # Docs: https://getbruin.com/docs/bruin/assets/columns
 columns:
-  - name: TODO_col1
-    type: TODO_type
-    description: TODO
+  - name: pickup_datetime
+    type: timestamp
+    description: "When the meter was engaged."
+  - name: dropoff_datetime
+    type: timestamp
+    description: "When the meter was disengaged."
 
 @bruin"""
 
 # TODO: Add imports needed for your ingestion (e.g., pandas, requests).
 # - Put dependencies in the nearest `requirements.txt` (this template has one at the pipeline root).
 # Docs: https://getbruin.com/docs/bruin/assets/python
+import os
+import json
+import pandas as pd
 
 
 # TODO: Only implement `materialize()` if you are using Bruin Python materialization.
@@ -67,6 +76,15 @@ def materialize():
     - Add a column like `extracted_at` for lineage/debugging (timestamp of extraction).
     - Prefer append-only in ingestion; handle duplicates in staging.
     """
-    # return final_dataframe
+
+    start_date = os.getenv("BRUIN_START_DATE")
+    end_date = os.getenv("BRUIN_END_DATE")
+    taxi_types = json.loads(os.getenv("BRUIN_VARS", "{}")).get("taxi_types", ["yellow"])
+
+    # generate list of months between start and end dates
+    # Fetch parquet files from:
+    # https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year}-{month}.parquet
+
+    return final_dataframe 
 
 
