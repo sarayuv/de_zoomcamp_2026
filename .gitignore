@@ -21,3 +21,4 @@ logs/
 dbt_internal_packages/
 
 Homeworks/homework4/.venv
+.bruin.yml
