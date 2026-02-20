@@ -1,11 +1,8 @@
 """@bruin
-name: ingestion.trips
-type: python
-image: python:3.11
 
 # TODO: Set the asset name (recommended pattern: schema.asset_name).
 # - Convention in this module: use an `ingestion.` schema for raw ingestion tables.
-name: TODO_SET_ASSET_NAME
+name: ingestion.trips
 
 # TODO: Set the asset type.
 # Docs: https://getbruin.com/docs/bruin/assets/python
@@ -13,7 +10,7 @@ type: python
 
 # TODO: Pick a Python image version (Bruin runs Python in isolated environments).
 # Example: python:3.11
-image: TODO_SET_PYTHON_IMAGE
+image: python:3.11
 
 # TODO: Set the connection.
 connection: duckdb-default
@@ -79,7 +76,7 @@ def materialize():
 
     start_date = os.getenv("BRUIN_START_DATE")
     end_date = os.getenv("BRUIN_END_DATE")
-    taxi_types = json.loads(os.getenv("BRUIN_VARS", "{}")).get("taxi_types", ["yellow"])
+    taxi_types = json.loads(os.environ["BRUIN_VARS"]).get("taxi_types", ["yellow"])
 
     # generate list of months between start and end dates
     # Fetch parquet files from:

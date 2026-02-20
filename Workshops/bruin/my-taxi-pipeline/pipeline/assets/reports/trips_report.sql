@@ -57,9 +57,9 @@ SELECT
   CAST(pickup_datetime AS DATE) AS trip_date,
   taxi_type,
   payment_type_name as payment_type,
-  COUNT(*) AS trip_count
-  SUM(fare_amount) AS total_fare
-  AVG(fare_amount) AS avg_fare
+  COUNT(*) AS trip_count,
+  SUM(fare_amount) AS total_fare,
+  AVG(fare_amount) AS avg_fare,
 FROM staging.trips
 WHERE pickup_datetime >= {{ start_datetime }} AND pickup_datetime < {{ end_datetime }}
 GROUP BY 1, 2, 3
